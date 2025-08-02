@@ -13,7 +13,7 @@
 # limitations under the License.
 
 """
-MediaPipePoseEstimationfrom3DFrame.py
+MediaPipePoseEstimationFrom3DFrame.py
 
 This module defines a class for extracting Pose Estimation from 3D frames with MediaPipe.
 
@@ -29,7 +29,7 @@ import numpy as np
 from typing import List, Union, Tuple
 from mediapipe.framework.formats.landmark_pb2 import NormalizedLandmarkList
 
-class MediaPipePoseEstimationfrom3DFrame:
+class MediaPipePoseEstimationFrom3DFrame:
     
     """
     Extracts pose estimation from a 3D frame with MediaPipe.
