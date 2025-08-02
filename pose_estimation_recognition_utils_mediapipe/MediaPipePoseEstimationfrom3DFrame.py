@@ -23,15 +23,11 @@ License: Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 """
 
 import mediapipe as mp
-from save2Ddata import save2Ddata
-from save2DdataWithName import save2DdataWithName
-from SAD import SAD
+from pose_estimation_recognition_utils import (Save2DData, Save2DDataWithName, SAD, SkeletonDataPoint, SkeletonDataPointWithName)
 from pose_estimation_recognition_utils_mediapipe.MediaPipePoseNames import MediaPipePoseNames
 import numpy as np
 from typing import List, Union, Tuple
 from mediapipe.framework.formats.landmark_pb2 import NormalizedLandmarkList
-from SkeletonDataPoint import SkeletonDataPoint
-from SkeletonDataPointWithName import SkeletonDataPointWithName
 
 class MediaPipePoseEstimationfrom3DFrame:
     
@@ -115,7 +111,7 @@ class MediaPipePoseEstimationfrom3DFrame:
         
         return self.sad.merge_pixel(pixel_list_left, pixel_list_right)
      
-    def create2Dlist(self, result_pose: NormalizedLandmarkList, result_right_hand: NormalizedLandmarkList, result_left_hand: NormalizedLandmarkList, result_face: NormalizedLandmarkList, frame: np.ndarray) -> List[Union[save2Ddata, save2DdataWithName]]: 
+    def create2Dlist(self, result_pose: NormalizedLandmarkList, result_right_hand: NormalizedLandmarkList, result_left_hand: NormalizedLandmarkList, result_face: NormalizedLandmarkList, frame: np.ndarray) -> List[Union[Save2DData, Save2DDataWithName]]: 
         
         """
         Creates a 2D list of all recognized pose estimation points.
@@ -138,9 +134,9 @@ class MediaPipePoseEstimationfrom3DFrame:
                 pixel_y = landmark.y * frame.shape[0]
                 if self.with_names:
                     name = self.MediaPipePoseNames.landmark_names_pose.get(idx, f"Landmark {idx}")
-                    object = save2DdataWithName(idx, name, pixel_x, pixel_y)
+                    object = Save2DDataWithName(idx, name, pixel_x, pixel_y)
                 else:
-                    object = save2Ddata(idx, pixel_x, pixel_y)
+                    object = Save2DData(idx, pixel_x, pixel_y)
                 pixel_list.append(object)
 
         if result_right_hand is not None:
@@ -150,17 +146,17 @@ class MediaPipePoseEstimationfrom3DFrame:
                     pixel_y = landmark.y * frame.shape[0]
                     if self.with_names:
                         name = self.MediaPipePoseNames.landmark_names_hand_right.get(idx, f"Landmark {idx}")
-                        object = save2DdataWithName((idx + 100), name, pixel_x, pixel_y)
+                        object = Save2DDataWithName((idx + 100), name, pixel_x, pixel_y)
                     else:
-                        object = save2Ddata(idx, pixel_x, pixel_y)
+                        object = Save2DData(idx, pixel_x, pixel_y)
                     pixel_list.append(object)
             except:
                 for i in range(len(self.MediaPipePoseNames.landmark_names_hand_right)):
                     if self.with_names:
                         name = self.MediaPipePoseNames.landmark_names_hand_right.get(idx, f"Landmark {idx}")
-                        object = save2DdataWithName((idx + 100), name, 0, 0)
+                        object = Save2DDataWithName((idx + 100), name, 0, 0)
                     else:
-                        object = save2Ddata(idx, 0, 0)
+                        object = Save2DData(idx, 0, 0)
                     pixel_list.append(object)
             
         if result_left_hand is not None:
@@ -170,17 +166,17 @@ class MediaPipePoseEstimationfrom3DFrame:
                     pixel_y = landmark.y * frame.shape[0]
                     if self.with_names:
                         name = self.MediaPipePoseNames.landmark_names_hand_left.get(idx, f"Landmark {idx}")
-                        object = save2DdataWithName((idx + 200), name, pixel_x, pixel_y)
+                        object = Save2DDataWithName((idx + 200), name, pixel_x, pixel_y)
                     else:
-                        object = save2Ddata(idx, pixel_x, pixel_y)
+                        object = Save2DData(idx, pixel_x, pixel_y)
                     pixel_list.append(object)
             except:
                 for i in range(len(self.MediaPipePoseNames.landmark_names_hand_left)):
                     if self.with_names:
                         name = self.MediaPipePoseNames.landmark_names_hand_left.get(idx, f"Landmark {idx}")
-                        object = save2DdataWithName((idx + 200), name, 0, 0)
+                        object = Save2DDataWithName((idx + 200), name, 0, 0)
                     else:
-                        object = save2Ddata(idx, 0, 0)
+                        object = Save2DData(idx, 0, 0)
                     pixel_list.append(object)
 
         if result_face is not None:
@@ -189,16 +185,16 @@ class MediaPipePoseEstimationfrom3DFrame:
                     pixel_x = landmark.x * frame.shape[1]
                     pixel_y = landmark.y * frame.shape[0]
                     if self.with_names:
-                        object = save2DdataWithName((idx + 1000), f'Face {idx}', pixel_x, pixel_y)
+                        object = Save2DDataWithName((idx + 1000), f'Face {idx}', pixel_x, pixel_y)
                     else:
-                        object = save2Ddata(idx, pixel_x, pixel_y)
+                        object = Save2DData(idx, pixel_x, pixel_y)
                     pixel_list.append(object)
             except:
                 for i in range(478):
                     if self.with_names:
-                        object = save2DdataWithName((idx + 1000), f'Face {idx}', 0, 0)
+                        object = Save2DDataWithName((idx + 1000), f'Face {idx}', 0, 0)
                     else:
-                        object = save2Ddata(idx, 0, 0)
+                        object = Save2DData(idx, 0, 0)
                     pixel_list.append(object)
 
         return pixel_list
