@@ -14,7 +14,7 @@ requirements = read_requirements()
 
 setup(
     name='pose-estimation-recognition-utils-mediapipe',
-    version='0.1.0b1',
+    version='0.1.0b2',
     packages=['pose_estimation_recognition_utils_mediapipe'],
     install_requires=requirements,
     url='https://github.com/cobtras/pose-estimation-recognition-utils-mediapipe',
